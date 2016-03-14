@@ -28,6 +28,10 @@ A entity consists of an identifier, a value and an optional set of attributes. T
 
         [_a-zA-Z]\w*
 
++ simple_identifier
+
+        [a-zA-Z]\w*
+
 + index
 
         '[' WS? expression WS? ( ',' WS? expression WS? )*']'
@@ -70,7 +74,7 @@ Expressions are closely modeled after C expressions, merely binary operators and
 
 + property_expression
 
-        member_expression '.' identifier
+        member_expression '.' simple_identifier
 
 + parenthesis_expression
 
@@ -86,11 +90,11 @@ Expressions are closely modeled after C expressions, merely binary operators and
 
 + variable
 
-        '$' identifier
+        '$' simple_identifier
 
 + global
 
-        '@' identifier
+        '@' simple_identifier
 
 + literal
 
@@ -129,7 +133,7 @@ The expander production used inside strings is used to reference expressions to 
 
 + hashItem
 
-        '*'? identifier WS? ':' WS? value
+        '*'? simple_identifier WS? ':' WS? value
 
 Comments are following doxygen style.
 
