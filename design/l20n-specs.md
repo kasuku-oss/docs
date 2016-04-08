@@ -115,9 +115,7 @@ The expander production used inside strings is used to reference expressions to 
 + string
 
         ('\'' ([^'] | escape | expander )* '\'') |
-        ('"' ([^"] | escape | expander )* '"') |
-        ('\'\'\'' ( . | escape | expander )*? '\'\'\'') |
-        ('"""' ( . | escape | expander )*? '"""')
+        ('"' ([^"] | escape | expander )* '"')
 
 + escape
 
