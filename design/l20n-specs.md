@@ -1,6 +1,6 @@
 # L20n For Games
 
-## Version 1.0
+## Version 1.1
 
 This is briefly annotated version of the grammar used for the L20n-for-games language. This is a fork of the proof-of-concept grammar as specified by Mozilla which can be found on [their L20n Spec Repository](https://github.com/l20n/spec).
 
@@ -74,7 +74,7 @@ Expressions are closely modeled after C expressions, merely binary operators and
 
 + property_expression
 
-        member_expression '.' simple_identifier
+        member_expression ( '.' simple_identifier | '[' WS? expression WS? ']' )
 
 + parenthesis_expression
 
