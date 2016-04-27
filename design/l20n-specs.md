@@ -1,6 +1,6 @@
 # L20n For Games
 
-## Version 1.1
+## Version 1.2
 
 This is briefly annotated version of the grammar used for the L20n-for-games language. This is a fork of the proof-of-concept grammar as specified by Mozilla which can be found on [their L20n Spec Repository](https://github.com/l20n/spec).
 
@@ -22,7 +22,7 @@ A entity consists of an identifier, a value and an optional set of attributes. T
 
 + entity
 
-        '<' identifier index? WS+ value WS? '>'
+        '<' identifier index? WS+ value attributes? WS? '>'
 
 + identifier
 
@@ -35,6 +35,10 @@ A entity consists of an identifier, a value and an optional set of attributes. T
 + index
 
         '[' WS? expression WS? ( ',' WS? expression WS? )*']'
+
++ attributes
+
+        ( WS keyValuePair)+
 
 Statements are similar to C-style statements.
 
@@ -66,7 +70,7 @@ Expressions are closely modeled after C expressions, merely binary operators and
 
 + member_expression
 
-        call_expression | property_expression | parenthesis_expression
+        call_expression | property_expression | attribute_expression | parenthesis_expression
 
 + call_expression
 
@@ -74,7 +78,12 @@ Expressions are closely modeled after C expressions, merely binary operators and
 
 + property_expression
 
-        member_expression ( '.' simple_identifier | '[' WS? expression WS? ']' )
+        identifier ( '.' simple_identifier | '[' WS? expression WS? ']' )+
+
++ attribute_expression
+
+        identifier '::' ( simple_identifier | '[' WS? expression WS? ']' )
+        ( '.' simple_identifier | '[' WS? expression WS? ']' )*
 
 + parenthesis_expression
 
@@ -132,6 +141,10 @@ The expander production used inside strings is used to reference expressions to 
 + hashItem
 
         '*'? simple_identifier WS? ':' WS? value
+        
++ keyValuePair
+
+        simple_identifier index? WS? ':' WS? value
 
 Comments are following doxygen style.
 
