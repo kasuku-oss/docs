@@ -1,0 +1,132 @@
+/* Simple Key/Value examples */
+<title "L20n demo">
+<hello "Hello, world!">
+
+/* an example of a key/value entity where the value is a table:
+ *
+ * this means that the sentence could be any of the provided table-value,
+ * depending on:
+ *      => the $build parameter given by the user;
+ *      => or the default table value (unknown) as indicated by the asterix;
+ *      => or the property given by the callee, in case the callee is
+           translating using the identifier "intro.dev" rather than "intro";
+ *
+ * External variables are variables given by the user,
+ * during translation, and are only available during the current translation.
+ * This means it's also available to any (deep-nested) expression as long as its
+ * within the same translation call.
+ */
+<l20n "L20n">
+<intro[$build] {
+  dev: "You're using a dev build of {{ l20n }} (with AMD modules).",
+  prod: "You're using a production-ready single-file version of {{ l20n }}.",
+ *unknown: "You're using an unknown version of {{ l20n }}.",
+}>
+
+/* An example showcasing that multi-line sentences are also supported.
+ *
+ * This and the previous entity also showcase that you can use expressions
+ * within any string using double paired curly brackets.
+ *
+ * A note regarding spacing within any string:
+ *      => When using multi-line string, the new-line will be replaced
+ *         by a space in case your sentences contains spaces already AND
+ *         in case there wouldn't be a space already between the two words;
+ *      => In case no spaces are in the sentence (such as would be the case in Chinese)
+ *         there won't be a space added;
+ *      => Multiple spaces inbetween a word aren't allowed and will be reduced to a single space;
+ *      => Any space before or after your sentence will be removed;
+ *      => Use unicode characters via the `U+` syntax in case you wish
+           to force any whitespace or other control characters in your sentence;
+
+ * In this example you also see a property expression with a global identifier
+ * as the root identifier of that property expression.
+ * A global identifier is an expression exposed by L20n or Game code,
+ * and is available for use in all your L20n files.
+ */
+<screenWidth "
+  The label of the button below changes depending on the
+  available screen width (currently: {{ @screen.width.px }}px).
+">
+
+/* An example showcasing how to write a macro,
+ * which works similar to programming languages.
+ *
+ * Similar to an entity, the name is writen right after the opening `<`.
+ *
+ * All parameters (that will be passed by the callee of this macro
+ * are written inbetween round brackets, right after the
+ * the name of the macro and all of the parameters start with a dollar-sign: `$`.
+ *
+ * The actual logic of the macro has to be written after the parameter list
+ * inbetween a single curly bracket pair and can be any expression.
+ * In this case the body is a very complex if-else-branch-chain.
+ *
+ * L20n macro's are only usable within your L20n file,
+ * and can't ever be accessed/retrieved from within your game code.
+ */
+<formFactor($n) {
+  $n.width.px < 480 ? "portraitPhone" :
+    $n.width.px < 768 ? "landscapePhone" :
+      $n.width.px < 980 ? "landscapeTablet" :
+        $n.width.px < 1200 ? "desktop" :
+          "large"
+}>
+
+<button value[formFactor(@screen)]: {
+  *desktop: "Create & insert a <p> element that will be dynamically localized",
+   landscapeTablet: "Create & insert a dynamically-localized <p>",
+   landscapePhone: "Insert a dynamically-localized <p>",
+   portraitPhone: "Insert a <p>",
+ },
+>
+
+<currentWidth "Current width: {{ @screen.width.px }}px.">
+
+
+/* An example showcasing a private entity.
+ * A private entity cannot be retrieved from game code and is identified by
+ * the underscore `_` prefix.
+ */
+<_options[@os] {
+  win: "Settings",
+ *nix: "Preferences",
+}>
+
+<langNego[$mode] {
+  multi: "
+    In order to test language negotiation, go to your
+    browser's {{ _options }} and change the Accept-Language
+    header.  Try setting French (fr) or Polish (pl) as your
+    first choice and observe the language fallback at work
+    in the web console.
+  ",
+  single: "
+    In the single-locale mode, no locales have been registered.
+    There is no language negotiation on the client side nor
+    language fallback.  This may be useful for server-side or
+    build-time language negotiation scenarios.
+  ",
+}>
+
+<timeOfDay($h) {
+  $h < 6 ? "night" :
+    $h < 12 ? "morning" :
+      $h < 18 ? "afternoon" :
+        "evening"
+}>
+
+<more "
+  For more information, visit <a>L20n.org</a>.
+">
+
+/* This entity will throw an error if the call to timeOfDay results in an
+ * invalid identifier, as there is no default table-value specified.
+ * See missing asterix!
+ */
+<kthxbye[timeOfDay(@hour)] {
+  morning: "Enjoy your morning!",
+  afternoon: "Have a great rest of the day!",
+  evening: "Have fun tonight!",
+  night: "Y U NO asleep‽",
+}>
