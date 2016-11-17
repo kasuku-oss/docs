@@ -1,0 +1,3 @@
+[submodule "design/src"]
+	path = design/src
+	url = https://github.com/GlenDC/l20n-mozilla-spec.git
