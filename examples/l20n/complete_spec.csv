@@ -2,3 +2,5 @@ title,L20n demo
 hello,"Hello, { $name }!"
 ,
 description,"This is a demo showcasing the simple subset CSV parser for L20n, allowing you to use spreadsheet software."
+,
+last-notice,"Last checked: { DATETIME($lastChecked, day: ""numeric"", month: ""long"") }."
