@@ -1,4 +1,4 @@
-# Kasuku Docs
+# polylingo docs
 
 A repository containing some of the more generic documentation,
 that don't belong to any project in particular.
