@@ -20,6 +20,9 @@ screenWidth =
     | The label of the button below changes depending on the
     | available screen width, allowing for a responsive design.
 
+# an example of a brand
+[[ brand ]]
+
 # An example showcasing variants used as attributes
 
 brandName = Firefox
