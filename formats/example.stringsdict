@@ -1,0 +1,32 @@
+<plist version="1.0">
+    <dict>
+        <!-- an example of a comment, which work just like XML Comments -->
+        
+        <!-- a text/value pair entry -->
+        <key>hello</key>
+        <string>Hello, World!</string>
+        <!-- a plural variant example-->
+        <!-- this example also shows the extent of its variable support -->
+        <key>There are %d users online.</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@users@</string>
+            <key>users</key>
+            <dict>
+                <!-- formatter support goes as far as this -->
+                <!-- available formats are listed here: https://developer.apple.com/library/content/documentation/CoreFoundation/Conceptual/CFStrings/formatSpecifiers.html#//apple_ref/doc/uid/TP40004265 -->
+                <!-- custom formatterss aren't possible -->
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>one</key>
+                <string>Un seul utilisateur en ligne.</string>
+                <key>other</key>
+                <string>Il y a %d utilisateurs en ligne.</string>
+            </dict>
+        </dict>
+        <!-- genders don't seem to be supported by default, but can be hacked in -->
+        <!-- generic variants are not possible either -->
+    </dict>
+</plist>
