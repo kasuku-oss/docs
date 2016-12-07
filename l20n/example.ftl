@@ -31,10 +31,11 @@ brandName = Firefox
 opened-new-window = { brandName[gender] ->
  *[masculine] { brandName } otworzyl nowe okno.
   [feminine] { brandName } otworzyla nowe okno.
+}
 
 # An example showcasing the use of a builtin
 
-last-notice = Last checked: { DATETIME($lastChecked, day: "numeric", month: "long") }.
+last-notice = Last checked: { DATETIME($lastChecked, day = "numeric", month = "long") }.
 
 # A complex example
 
