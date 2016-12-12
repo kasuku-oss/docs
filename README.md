@@ -7,3 +7,8 @@ that don't belong to any project in particular.
 
 Contains information about the specifications and an example file,
 using the full specification.
+
+## formats
+
+Contains information about the different types of file formats available
+and used for l10n.
