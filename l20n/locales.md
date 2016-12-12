@@ -1,6 +1,6 @@
 # Locales
 
-A locale is identified by a code (string), defined in [ISO 15897](https://en.wikipedia.org/wiki/ISO_15897). When a language has a region-specific usage, its postfix indicating the region is separated by the main language code, with a hyphen `-` (Eg. `nl-be`, for Belgian Dutch).
+A locale is identified by a code (string), defined in [ISO 15897](https://en.wikipedia.org/wiki/ISO_15897). When a language has a region-specific usage, its postfix indicating the region is separated by the main language code, with a hyphen `-` or underscore `_` (Eg. `nl-be` or `nl_be`, for Belgian Dutch). Locale tokens are case insensitive.
 
 Down below you can find a list language locales are supported by default by L20n.
 _Note_ that the (region-specific) code is stored to differentiate translations,
