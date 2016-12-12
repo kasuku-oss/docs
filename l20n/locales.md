@@ -176,3 +176,12 @@ but has no influence on the underlying formatting (i18n) system.
 + `yo`
 + `zh`
 + `zu`
+
+## Locale Resolve
+
+Which locale is currently in use, is resolved in the following way:
+
+1. if a locale is explicitly specified it is used, otherwise...
+2. if a locale can be automatically detected on the current platform it is used, otherwise...
+3. if a default language is specified it is used, otherwise...
+4. the last loaded locale is used if possible.
