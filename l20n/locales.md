@@ -1,187 +1,52 @@
-# Locales
+# Locales and Language Tags
 
-A locale is identified by a code (string), defined in [ISO 15897](https://en.wikipedia.org/wiki/ISO_15897). When a language has a region-specific usage, its postfix indicating the region is separated by the main language code, with a hyphen `-` or underscore `_` (Eg. `nl-be` or `nl_be`, for Belgian Dutch). Locale tokens are case insensitive.
+A locale is identified by a token, called Language Tags.
+A Language Tag can have following formats:
 
-Down below you can find a list language locales are supported by default by L20n.
-_Note_ that the (region-specific) code is stored to differentiate translations,
-but has no influence on the underlying formatting (i18n) system.
++ `ab`
++ `ab-XY`
++ `abc-XY`
++ `abc-XY-SIL`
++ `abc-XY-dialect`
 
-+ `af`
-+ `ak`
-+ `am`
-+ `ar`
-+ `asa`
-+ `az`
-+ `be`
-+ `bem`
-+ `bez`
-+ `bg`
-+ `bh`
-+ `bm`
-+ `bn`
-+ `bo`
-+ `br`
-+ `brx`
-+ `bs`
-+ `ca`
-+ `cgg`
-+ `chr`
-+ `cs`
-+ `cy`
-+ `da`
-+ `de`
-+ `dv`
-+ `dz`
-+ `ee`
-+ `el`
-+ `en`
-+ `eo`
-+ `es`
-+ `et`
-+ `eu`
-+ `fa`
-+ `ff`
-+ `fi`
-+ `fil`
-+ `fo`
-+ `fr`
-+ `fur`
-+ `fy`
-+ `ga`
-+ `gd`
-+ `gl`
-+ `gsw`
-+ `gu`
-+ `guw`
-+ `gv`
-+ `ha`
-+ `haw`
-+ `he`
-+ `hi`
-+ `hr`
-+ `hu`
-+ `id`
-+ `ig`
-+ `ii`
-+ `is`
-+ `it`
-+ `iu`
-+ `ja`
-+ `jmc`
-+ `jv`
-+ `ka`
-+ `kab`
-+ `kaj`
-+ `kcg`
-+ `kde`
-+ `kea`
-+ `kk`
-+ `kl`
-+ `km`
-+ `kn`
-+ `ko`
-+ `ksb`
-+ `ksh`
-+ `ku`
-+ `kw`
-+ `lag`
-+ `lb`
-+ `lg`
-+ `ln`
-+ `lo`
-+ `lt`
-+ `lv`
-+ `mas`
-+ `mg`
-+ `mk`
-+ `ml`
-+ `mn`
-+ `mo`
-+ `mr`
-+ `ms`
-+ `mt`
-+ `my`
-+ `nah`
-+ `naq`
-+ `nb`
-+ `nd`
-+ `ne`
-+ `nl`
-+ `nn`
-+ `no`
-+ `nr`
-+ `nso`
-+ `ny`
-+ `nyn`
-+ `om`
-+ `or`
-+ `pa`
-+ `pap`
-+ `pl`
-+ `ps`
-+ `pt`
-+ `rm`
-+ `ro`
-+ `rof`
-+ `ru`
-+ `rwk`
-+ `sah`
-+ `saq`
-+ `se`
-+ `seh`
-+ `ses`
-+ `sg`
-+ `sh`
-+ `shi`
-+ `sk`
-+ `sl`
-+ `sma`
-+ `smi`
-+ `smj`
-+ `smn`
-+ `sms`
-+ `sn`
-+ `so`
-+ `sq`
-+ `sr`
-+ `ss`
-+ `ssy`
-+ `st`
-+ `sv`
-+ `sw`
-+ `syr`
-+ `ta`
-+ `te`
-+ `teo`
-+ `th`
-+ `ti`
-+ `tig`
-+ `tk`
-+ `tl`
-+ `tn`
-+ `to`
-+ `tr`
-+ `ts`
-+ `tzm`
-+ `uk`
-+ `ur`
-+ `ve`
-+ `vi`
-+ `vun`
-+ `wa`
-+ `wae`
-+ `wo`
-+ `xh`
-+ `xog`
-+ `yo`
-+ `zh`
-+ `zu`
+Where:
+
++ `ab/abc` - indicates language, from ISO 639.1/639.2
+    + List: http://www.loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
+    + Note that not all languages have a 2-letter code
++ `XY` - indicates region, from ISO 3166
+    + List: http://data.okfn.org/data/core/country-list/r/data.csv
++ `SIL` - from the SIL list
+    + List: https://www.ethnologue.com/sites/default/files/LanguageCodes.tab
++ `dialect` - following the rules from RFC 5646
+    + 5 to 8 letters; or a number followed by three letters or numbers
+
+When searching for a locale, the closest match will always be returned:
+
+```
+Is an exact match possible?
+    |--> yes: Return it!
+     ---> no: Can a match with more information be found?
+                |--> yes: Return the first one found!
+                 ---> no: No match could be found!
+```
+
+_MessageContexts_ can be created by giving the path to a valid FTL file,
+the names of these files are expected to be valid language tags.
+This is important as automated features (Eg. formatters (see: builtins) and auto-detecting the locale (see: next chapter)) depend on the enumerated meaning behind the parts of these language tags. Most features will simply care about the language, while some might also consider the region. Matching a locale should always be as liberal and exact as possible.
 
 ## Locale Resolve
 
-Which locale is currently in use, is resolved in the following way:
+When translating, following resolve logic is used to choose which locale to use:
 
-1. if a locale is explicitly specified it is used, otherwise...
-2. if a locale can be automatically detected on the current platform it is used, otherwise...
-3. if a default language is specified it is used, otherwise...
-4. the last loaded locale is used if possible.
+```
+Is a locale explicitly specified?
+    |--> yes: Use it!
+     ---> no: Can the locale be automatically detected?
+                |--> yes: Use it!
+                 ---> no: Use the default locale!
+```
+
+## references
+
++ Language Tags: https://wiki.mozilla.org/L10n:Locale_Codes
