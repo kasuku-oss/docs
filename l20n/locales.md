@@ -26,14 +26,28 @@ When searching for a locale, the closest match will always be returned:
 ```
 Is an exact match possible?
     |--> yes: Return it!
-     ---> no: Can a match with more information be found?
-                |--> yes: Return the first one found!
-                 ---> no: No match could be found!
+     ---> no: Is this a non-generic version (provides more then a language code)
+              and is a generic version available?
+                |--> yes: Return it!
+                 ---> no: Is a version available at the same (`en-GB` insead of `en-US`)
+                          or deeper (`en-GB-pirate` instead of `en-US`) match level?
+                            |--> yes: Return the closest and first one found!
+                             ---> no: No match could be found!
 ```
+
+Keep your locales as generic as possible, only specify a region from the second version of the same language on. Same goes for dialects/SILs. If you provide 2 regions for 1 language, keep 1 of them generic as its default (Eg. if you provide `en-US` and `en-GB`, keep `en-US` as `en`, if this is a reasonable default for you). When no generic version is specified of a language, it is undefined which language you get when looking for a version (Eg. `en-AU`) which is not provided).
+
+## Why are Language Tags used?
 
 _MessageContexts_ can be created by giving the path to a valid FTL file,
 the names of these files are expected to be valid language tags.
 This is important as automated features (Eg. formatters (see: builtins) and auto-detecting the locale (see: next chapter)) depend on the enumerated meaning behind the parts of these language tags. Most features will simply care about the language, while some might also consider the region. Matching a locale should always be as liberal and exact as possible.
+
+## LanguageTag Parsing for Libraries and Plugins
+
+Libraries and plugins will only validate the language tag as much as is needed for splitting the tag into the different parts (language, region and SIL/dialect). Meaning that it will only check if a hyphen is used and wether or not any non Alphanumeric values are defined. Custom languages/regions/sil/dialects are allowed, as the specific parts are not validated or checked, beyond the alphanumeric-only character check.
+
+Filenames don't have to be exact matches. The same Language-Tag matching algorithm defined earlier in this file is used to match a locale file based on a requested (import) locale.
 
 ## Locale Resolve
 
@@ -41,12 +55,12 @@ When translating, following resolve logic is used to choose which locale to use:
 
 ```
 Is a locale explicitly specified?
-    |--> yes: Use it!
+    |--> yes: Try to find a match!
      ---> no: Can the locale be automatically detected?
-                |--> yes: Use it!
-                 ---> no: Use the default locale!
+                |--> yes: Try to find a match!
+                 ---> no: Try to find a match for the default locale!
 ```
 
-## references
+## References
 
 + Language Tags: https://wiki.mozilla.org/L10n:Locale_Codes
